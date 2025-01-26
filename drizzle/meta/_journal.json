@@ -1,0 +1,27 @@
+{
+  "version": "7",
+  "dialect": "postgresql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1737627503216,
+      "tag": "0000_solid_stature",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1737636895304,
+      "tag": "0001_cynical_captain_universe",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1737721647586,
+      "tag": "0002_burly_garia",
+      "breakpoints": true
+    }
+  ]
+}
