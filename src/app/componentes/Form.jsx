@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation"
 import { useState } from "react"
 
 const Form = () => {
-  const router = useRouter()
+  const Router = useRouter()
   const [data,setData] = useState({
     name : "",
     subname : "",
@@ -32,7 +32,8 @@ const Form = () => {
       throw new Error("Failed to add recipe")
     }
     alert("Recipe added successfully")
-    router.refresh();
+    Router.push("/")
+    Router.refresh()
    } catch (error) {
     console.log(error)
    }

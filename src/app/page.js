@@ -26,22 +26,16 @@ export default async function Home() {
   return (
     <div className="flex flex-wrap">
       {recipes && recipes.length > 0 ? (
-        recipes.map((recipe) => (
-          <Card key={recipe?.id} recipe={recipe} />
-        ))
-      ) : (
-        
-        <div className="flex flex-col  
-			 items-center justify-center w-full h-screen">
-  <div>
-  <p className="text-lg font-semibold">No recipes available.</p>
-  <p className="text-gray-500"> You can create your own from the create button.</p>
+  recipes.map((recipe) => (
+    <Card key={recipe.id} recipe={recipe} />
+  ))
+) : (
+  <div className="flex flex-col items-center justify-center w-full h-screen">
+    <p>No recipes available.</p>
+    <p>You can create your own from the create button.</p>
   </div>
-</div>
+)}
 
-      
-
-      )}
     </div>
   );
 }
