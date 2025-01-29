@@ -22,6 +22,20 @@
       "when": 1737721647586,
       "tag": "0002_burly_garia",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1738119999749,
+      "tag": "0003_exotic_satana",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1738121112522,
+      "tag": "0004_remarkable_forge",
+      "breakpoints": true
     }
   ]
 }

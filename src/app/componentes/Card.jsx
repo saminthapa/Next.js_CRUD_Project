@@ -4,7 +4,7 @@ const Card = ({recipe}) => {
   console.log(recipe)
   return (
     
-    <Link className="p-8 max-w-lg border border-indigo-300 rounded-2xl hover:shadow-xl hover:shadow-indigo-50 flex flex-col items-center"
+    <Link className="p-8 m-5 max-w-lg border border-indigo-300 rounded-2xl hover:shadow-xl hover:shadow-indigo-50 flex flex-col items-center"
     href={`/${recipe?.id}`}>
     <img src="https://loremflickr.com/800/600/girl" className="shadow rounded-lg overflow-hidden border" />
     <div className="mt-8">

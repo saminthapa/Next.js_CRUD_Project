@@ -1,33 +1,52 @@
-import Card from "./componentes/Card";
 
-const fetchRecipes = async ()=>{
+import Card from "../app/componentes/Card";
+
+
+const fetchRecipes = async () => {
   try {
-    const response = await fetch("http://localhost:3000/api/recipes",{
-      cache : "no-store"
-    })
-    if(!response.ok){
-      throw new Error("Failed to fetch data")
+    const response = await fetch("http://localhost:3000/api/recipes", {
+      cache: "no-store",
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to fetch recipes");
     }
-    return response.json()
+
+    const data = await response.json();
+    return data.recipes || []; // Ensure recipes is an array, even if empty
   } catch (error) {
-    console.log(error)
-    return[]
+    console.error(error);
+    return []; // Return an empty array in case of error
   }
-}
+};
+
 
 export default async function Home() {
-   const {recipes} = await fetchRecipes()
+  const recipes = await fetchRecipes();
+  console.log(recipes);
+
   return (
-    <div className="flex flex-wrap ">
-      {
-        recipes.map((recipe)=>{
-          return(
-            <Card key={recipe.id} recipe={recipe}/>
-          )
-        })
-      }
-    
-    <Card/>
+    <div className="flex flex-wrap">
+      {recipes && recipes.length > 0 ? (
+        recipes.map((recipe) => (
+          <Card key={recipe.id} recipe={recipe} />
+        ))
+      ) : (
+        
+        <div className="flex flex-col  
+			 items-center justify-center w-full h-screen">
+  <div>
+  <p className="text-lg font-semibold">No recipes available.</p>
+  <p className="text-gray-500"> You can create your own from the create button.</p>
+  </div>
+</div>
+
+      
+
+      )}
     </div>
   );
 }
+
+
+
