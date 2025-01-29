@@ -13,61 +13,69 @@ const EditPage = () => {
   const { id } = useParams(); 
   const router = useRouter();
 
+  // Fetch the existing recipe data
   useEffect(() => {
     async function fetchRecipe() {
       if (!id) return;
 
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/recipes/${id}`);
-      const result = await response.json();
-      if (response.ok) {
-        const { name, subname, description } = result.recipe[0];
-        setData({ name, subname, description });
+      try {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/recipes/${id}`);
+        const result = await response.json();
+
+        if (response.ok) {
+          const recipe = result.recipe?.[0]; // Check if the array exists
+          if (recipe) {
+            setData({
+              name: recipe.name || "",
+              subname: recipe.subname || "",
+              description: recipe.description || "",
+            });
+          }
+        } else {
+          console.error("Failed to fetch recipe:", result.message);
+        }
+      } catch (error) {
+        console.error("Error fetching recipe:", error);
       }
     }
 
     fetchRecipe();
-  }, [id]); 
+  }, [id]);
 
+  // Handle form input changes
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setData({
-      ...data,
-      [name]: value,
-    });
+    setData({ ...data, [name]: value });
   };
 
+  // Submit the updated data
   const handleSubmit = async (e) => {
     e.preventDefault();
   
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/recipes`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        id,
-        name: data.name,
-        subname: data.subname,
-        description: data.description,
-      }),
-    });
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/recipes/${id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: data.name,
+          subname: data.subname,
+          description: data.description,
+        }),
+      });
+
+      const result = await response.json();
   
-    if (response.ok) {
-      alert("Recipe updated successfully!");
-      router.push(`/${id}`);
-    } else {
-      // Check if the response contains JSON before parsing
-      let errorData;
-      try {
-        errorData = await response.json();
-      } catch (error) {
-        console.error("Error parsing response:", error);
-        errorData = { message: "Failed to update recipe, but no further details were provided." };
+      if (response.ok) {
+        alert("Recipe updated successfully!");
+        router.push("/");
+      } else {
+        alert(`Failed to update recipe: ${result.message}`);
       }
-      alert(`Failed to update recipe: ${errorData.message}`);
+    } catch (error) {
+      console.error("Error updating recipe:", error);
+      alert("Something went wrong while updating.");
     }
   };
-  
 
   return (
     <div className="mx-14 mt-10 border-2 border-blue-400 rounded-lg">
@@ -103,8 +111,6 @@ const EditPage = () => {
               onChange={handleInputChange}
             ></textarea>
           </div>
-          <div>
-  </div>
           <div className="text-center">
             <button className="cursor-pointer rounded-lg bg-blue-700 px-8 py-5 text-sm font-semibold text-white">
               Update Recipe
