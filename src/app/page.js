@@ -5,20 +5,18 @@ import Card from "../app/componentes/Card";
 const fetchRecipes = async () => {
   try {
     const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/recipes`, {
-      cache: "no-store",
+      cache: "no-store", // Ensure fresh data is fetched
     });
-
     if (!response.ok) {
       throw new Error("Failed to fetch recipes");
     }
-
-    const data = await response.json();
-    return data.recipes || []; // Ensure recipes is an array, even if empty
+    return response.json();
   } catch (error) {
-    console.error(error);
-    return []; // Return an empty array in case of error
+    console.log(error);
+    return [];
   }
 };
+
 
 
 export default async function Home() {
@@ -29,7 +27,7 @@ export default async function Home() {
     <div className="flex flex-wrap">
       {recipes && recipes.length > 0 ? (
         recipes.map((recipe) => (
-          <Card key={recipe.id} recipe={recipe} />
+          <Card key={recipe?.id} recipe={recipe} />
         ))
       ) : (
         

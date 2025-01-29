@@ -89,7 +89,7 @@ const EditPage = () => {
               name="name"
               className="mt-1 block w-1/2 rounded-md border border-slate-300 bg-white px-3 py-4 placeholder-slate-400 shadow-sm placeholder:font-semibold placeholder:text-gray-500 focus:border-sky-500 focus:outline-none focus:ring-1 focus:ring-sky-500 sm:text-sm"
               placeholder="Name *"
-              value={data.name}
+              value={data?.name}
               onChange={handleInputChange}
             />
             <input
@@ -97,7 +97,7 @@ const EditPage = () => {
               name="subname"
               className="mt-1 block w-1/2 rounded-md border border-slate-300 bg-white px-3 py-4 placeholder-slate-400 shadow-sm placeholder:font-semibold placeholder:text-gray-500 focus:border-sky-500 focus:outline-none focus:ring-1 focus:ring-sky-500 sm:text-sm"
               placeholder="Subname *"
-              value={data.subname}
+              value={data?.subname}
               onChange={handleInputChange}
             />
           </div>
@@ -107,7 +107,7 @@ const EditPage = () => {
               cols="30"
               rows="10"
               className="mb-10 h-40 w-full resize-none rounded-md border border-slate-300 p-5 font-semibold text-gray-500"
-              value={data.description}
+              value={data?.description}
               onChange={handleInputChange}
             ></textarea>
           </div>
