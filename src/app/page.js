@@ -4,7 +4,7 @@ import Card from "../app/componentes/Card";
 
 const fetchRecipes = async () => {
   try {
-    const response = await fetch("http://localhost:3000/api/recipes", {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/recipes`, {
       cache: "no-store",
     });
 
