@@ -18,26 +18,30 @@ const Form = () => {
     })
   }
   
-  const handleSubmit = async (e)=>{
-    e.preventDefault()
-   try {
-    const response = await fetch("/api/recipes",{
-      method : 'POST',
-      headers : {
-        "Content-Type" : "application/json"
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/recipes`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
       },
-      body : JSON.stringify(data)
-    })
-    if(!response.ok){
-      throw new Error("Failed to add recipe")
+      body: JSON.stringify({
+        name: data.name,
+        subname: data.subname,
+        description: data.description,
+      }),
+    });
+  
+    if (response.ok) {
+      alert("Recipe added successfully!");
+      Router.push("/"); // Navigate to home page
+      Router.refresh(); // Force a page refresh and fetch updated data
+    } else {
+      alert("Failed to add recipe");
     }
-    alert("Recipe added successfully")
-    Router.push("/")
-    Router.refresh()
-   } catch (error) {
-    console.log(error)
-   }
-  }
+  };
+  
   return (
     <div className="mx-14 mt-10 border-2 border-blue-400 rounded-lg">
     <div className="mt-10 text-center font-bold">lets make it</div>
