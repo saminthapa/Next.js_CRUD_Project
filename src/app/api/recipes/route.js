@@ -4,27 +4,31 @@ import { recipes } from "../../../db/schema";
 import { db } from "../../../db/db";
 import { eq } from "drizzle-orm";
 
-export async function GET(){
-  const datas = await db.select().from(recipes)
-   return Response.json({
-       recipes : datas
-   })
+export async function GET() {
+  try {
+    const datas = await db.select().from(recipes);
+    return new Response(JSON.stringify({ recipes: datas }), {
+      headers: { "Content-Type": "application/json" },
+    });
+  } catch (error) {
+    return new Response(JSON.stringify({ message: error.message }), { status: 500 });
+  }
 }
 
 export async function POST(request) {
   try {
-    const data = await request.json();
-    console.log("Received Data:", data); // Debugging line
-
+    let data = await request.json();
     await db.insert(recipes).values(data);
-    return Response.json({
-      message: "Data inserted successfully",
-    }, { status: 201 });
+
+    return new Response(JSON.stringify({ message: "Data inserted successfully" }), {
+      status: 201,
+      headers: { "Content-Type": "application/json" },
+    });
   } catch (error) {
-    console.error("POST Error:", error); // Debugging error
-    return Response.json({
-      message: error.message
-    }, { status: 500 });
+    return new Response(JSON.stringify({ message: error.message }), {
+      status: 500,
+      headers: { "Content-Type": "application/json" },
+    });
   }
 }
 
