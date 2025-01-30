@@ -12,7 +12,8 @@ const Card = ({recipe}) => {
         <p className="mt-2 text-gray-600">{recipe?.subname}
         </p>
         <div className="mt-5">
-            <button type="button" className="inline-flex items-center rounded-md border border-transparent bg-gray-800 px-3 py-2 text-sm font-medium leading-4 text-white shadow-sm hover:bg-gray-900">{recipe?.createdat}</button>
+            <button type="button" className="inline-flex items-center rounded-md border border-transparent bg-gray-800 px-3 py-2 text-sm font-medium leading-4 text-white shadow-sm hover:bg-gray-900">{recipe?.createdat ? new Date(recipe.createdat).toLocaleString() : "No Date"}
+            </button>
         </div>
     </div>
     </Link>

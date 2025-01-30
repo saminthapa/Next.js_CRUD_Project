@@ -11,19 +11,23 @@ export async function GET(){
    })
 }
 
-export async function POST(request){
-  let data = await request.json()
+export async function POST(request) {
   try {
-     await db.insert(recipes).values(data)
-     return Response.json({
-      message: "Data inserted successfully"
-  },{status : 201})
+    const data = await request.json();
+    console.log("Received Data:", data); // Debugging line
+
+    await db.insert(recipes).values(data);
+    return Response.json({
+      message: "Data inserted successfully",
+    }, { status: 201 });
   } catch (error) {
-      return Response.json({
-          message: error.message
-      },{status : 500})
+    console.error("POST Error:", error); // Debugging error
+    return Response.json({
+      message: error.message
+    }, { status: 500 });
   }
 }
+
 
 
 export async function PUT(request) {

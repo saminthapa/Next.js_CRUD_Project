@@ -21,7 +21,7 @@ const Form = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/recipes`, {
+    const response = await fetch("/api/recipes", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
