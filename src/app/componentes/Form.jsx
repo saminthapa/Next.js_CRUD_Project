@@ -34,13 +34,16 @@ const Form = () => {
     });
   
     if (response.ok) {
+      console.log("Recipe added successfully!");
       alert("Recipe added successfully!");
       Router.push("/"); // Navigate to home page
       Router.refresh(); // Force a page refresh and fetch updated data
     } else {
+      console.log("Failed to add recipe", response);
       alert("Failed to add recipe");
     }
   };
+  
   
   return (
     <div className="mx-14 mt-10 border-2 border-blue-400 rounded-lg">

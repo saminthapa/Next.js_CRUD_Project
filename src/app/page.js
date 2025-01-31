@@ -1,11 +1,10 @@
 
 import Card from "../app/componentes/Card";
 
-
 const fetchRecipes = async () => {
   try {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL.replace(/\/$/, "")}/api/recipes?timestamp=${new Date().getTime()}`, 
+      `${process.env.NEXT_PUBLIC_API_URL.replace(/\/$/, "")}/api/recipes?timestamp=${new Date().getTime()}`,
       {
         cache: "no-store", // Ensure fresh data is fetched
       }
@@ -23,6 +22,7 @@ const fetchRecipes = async () => {
     return [];
   }
 };
+
 
 
 

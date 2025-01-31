@@ -10,20 +10,22 @@ export async function GET(){
       recipes : datas
   })
 }
-
-export async function POST(request){
-  let data = await request.json()
- try {
-   await db.insert(recipes).values(data) 
-   return Response.json({
-      message : "Date inserted successfully"
-   },{status : 201})
- } catch (error) {
-   return Response.json({
-      message : error.message
-   },{status:500})
- }
+export async function POST(request) {
+  let data = await request.json();
+  try {
+    await db.insert(recipes).values(data);
+    console.log("Data inserted successfully:", data);  // Debugging log
+    return Response.json({
+      message: "Data inserted successfully"
+    }, {status: 201});
+  } catch (error) {
+    console.log("Error inserting data:", error); // Debugging log
+    return Response.json({
+      message: error.message
+    }, {status: 500});
+  }
 }
+
 
 
 
