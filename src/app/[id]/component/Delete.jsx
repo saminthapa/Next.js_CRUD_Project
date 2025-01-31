@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation"
 const DeleteButton = ({recipeId}) =>{
     const router = useRouter()
     const deleteRecipe = async ()=> {
-     const response = await fetch("api/recipes/" + recipeId,{
+     const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL.replace(/\/$/, "")}/api/recipes`    + recipeId,{
             method : "DELETE"
         })
         if(!response.ok){

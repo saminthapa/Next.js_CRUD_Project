@@ -19,7 +19,7 @@ const EditPage = () => {
       if (!id) return;
 
       try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/recipes/${id}`);
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL.replace(/\/$/, "")}/api/recipes/${id}`);
         const result = await response.json();
 
         if (response.ok) {
@@ -53,7 +53,7 @@ const EditPage = () => {
     e.preventDefault();
   
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/recipes/${id}`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL.replace(/\/$/, "")}/api/recipes/${id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

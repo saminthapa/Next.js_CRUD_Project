@@ -8,7 +8,7 @@ async function SinglPage({ params }) {
   let recipe;
   
   try {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/recipes/${recipeId}`);
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL.replace(/\/$/, "")}/api/recipes/${recipeId}`);
     if (!response.ok) {
       throw new Error("Failed to fetch the recipe");
     }
