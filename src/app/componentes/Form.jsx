@@ -1,72 +1,49 @@
-"use client"
+"use client";
 
-import { useRouter } from "next/navigation"
-import { useState } from "react"
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 const Form = () => {
-  const Router = useRouter()
-  const [data,setData] = useState({
-    name : "",
-    subname : "",
-    description : ""
-  })
-  const handleInput =(e)=>{
-    const {name,value} = e.target
-    setData({
-      ...data,
-      [name] : value
-    })
-  }
-  
+  const [data, setData] = useState({
+    name: "",
+    subname: "",
+    description: "",
+  });
+
+  const router = useRouter();
+
+  const handleInput = (e) => {
+    const { name, value } = e.target;
+    setData({ ...data, [name]: value });
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL.replace(/\/$/, "")}/api/recipes`, {
+
+    const response = await fetch("/api/recipes", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({
-        name: data.name,
-        subname: data.subname,
-        description: data.description,
-      }),
+      body: JSON.stringify(data),
     });
-  
+
     if (response.ok) {
-      console.log("Recipe added successfully!");
       alert("Recipe added successfully!");
-      Router.push("/"); // Navigate to home page
-      Router.refresh(); // Force a page refresh and fetch updated data
+      router.push("/"); // Navigate to home page
     } else {
-      console.log("Failed to add recipe", response);
       alert("Failed to add recipe");
     }
   };
-  
-  
+
   return (
-    <div className="mx-14 mt-10 border-2 border-blue-400 rounded-lg">
-    <div className="mt-10 text-center font-bold">lets make it</div>
-    <div className="mt-3 text-center text-4xl font-bold">Create Recipe</div>
-    <div className="p-8">
     <form onSubmit={handleSubmit}>
-    <div className="flex gap-4">
-        <input type="Name" name="name" className="mt-1 block w-1/2 rounded-md border border-slate-300 bg-white px-3 py-4 placeholder-slate-400 shadow-sm placeholder:font-semibold placeholder:text-gray-500 focus:border-sky-500 focus:outline-none focus:ring-1 focus:ring-sky-500 sm:text-sm" placeholder="Name *" onChange={handleInput}/>
-        <input type="text" name="subname" className="mt-1 block w-1/2 rounded-md border border-slate-300 bg-white px-3 py-4 placeholder-slate-400 shadow-sm placeholder:font-semibold placeholder:text-gray-500 focus:border-sky-500 focus:outline-none focus:ring-1 focus:ring-sky-500 sm:text-sm" placeholder="Subname *" onChange={handleInput}/>
-      </div>
-      <div className="">
-        <textarea name="description" id="text" cols="30" rows="10" className="mb-10 h-40 w-full resize-none rounded-md border border-slate-300 p-5 font-semibold text-gray-500" defaultValue="Description of your Recipe" onChange={handleInput}></textarea>
-      </div>
-      <div className="text-center">
-        <button className="cursor-pointer rounded-lg bg-blue-700 px-8 py-5 text-sm font-semibold text-white">Create Recipe</button>
-      </div>
+      <input type="text" name="name" placeholder="Name" onChange={handleInput} required />
+      <input type="text" name="subname" placeholder="Subname" onChange={handleInput} required />
+      <textarea name="description" placeholder="Description" onChange={handleInput} required />
+      <button type="submit">Create Recipe</button>
     </form>
+  );
+};
 
-     
-    </div>
-  </div>
-  )
-}
-
-export default Form
+export default Form;

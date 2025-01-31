@@ -1,49 +1,34 @@
+import { useEffect, useState } from "react";
+import Card from "../components/Card";
 
-import Card from "../app/componentes/Card";
+const Home = () => {
+  const [recipes, setRecipes] = useState([]);
 
-const fetchRecipes = async () => {
-  try {
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL.replace(/\/$/, "")}/api/recipes`,
-      {
-        cache: "no-store", // Ensure fresh data is fetched
-      }
-    );
+  useEffect(() => {
+    const fetchRecipes = async () => {
+      const response = await fetch("/api/recipes");
+      const data = await response.json();
+      setRecipes(data);
+    };
 
-    if (!response.ok) {
-      throw new Error("Failed to fetch recipes");
-    }
+    fetchRecipes();
+  }, []);
 
-    const data = await response.json();
-    console.log("Fetched Recipes:", data); // Debugging to check API response
-    return data;
-  } catch (error) {
-    console.error("Error fetching recipes:", error);
-    return [];
-  }
-};
-
-
-
-
-export default async function Home() {
-  const recipes = await fetchRecipes(); // Fetch the latest recipes
-  console.log(recipes); // Debugging to check if data is fetched correctly
+  const handleDelete = (id) => {
+    setRecipes((prevRecipes) => prevRecipes.filter((recipe) => recipe.id !== id));
+  };
 
   return (
     <div className="flex flex-wrap">
-      {recipes && recipes.length > 0 ? (
+      {recipes.length > 0 ? (
         recipes.map((recipe) => (
-          <Card key={recipe.id} recipe={recipe} />
+          <Card key={recipe.id} recipe={recipe} onDelete={handleDelete} />
         ))
       ) : (
-        <div className="flex flex-col items-center justify-center w-full h-screen">
-          <p>No recipes available.</p>
-          <p>You can create your own from the create button.</p>
-        </div>
+        <div>No recipes available. You can create one!</div>
       )}
     </div>
   );
-}
+};
 
-
+export default Home;
